@@ -29,7 +29,7 @@
     "contains_non_public_inventory": true,
     "digest": "sha256:55d92a5c96fa7dd7f9b643fa6d51397b8a2d6fa5b21d3522ab9b2e9e30a30c1e",
     "path": "owners/hypesiege.json",
-    "repository": "ORESoftware/project-registry"
+    "repository": "approved-private-registry"
   },
   "relationships": [],
   "repositories": [
