@@ -3,9 +3,8 @@
 
 - **GitHub organization:** [hypesiege](https://github.com/hypesiege)
 - **Canonical GitHub Project:** [hypesiege-project](https://github.com/orgs/hypesiege/projects/1) (project 1)
-- **Canonical Linear project:** [github.com/hypesiege](https://linear.app/denman/project/githubcomhypesiege-12bdb95b4116)
+- **Canonical Linear project:** [planning workspace](https://linear.app/denman/project/githubcomhypesiege-12bdb95b4116)
 - **Organization documentation repository:** [hypesiege/.github](https://github.com/hypesiege/.github)
-- **Durable organization routing card:** [hypesiege/.github#2](https://github.com/hypesiege/.github/issues/2)
 
 ## Source-of-truth boundaries
 
