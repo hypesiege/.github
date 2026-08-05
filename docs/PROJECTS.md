@@ -17,7 +17,7 @@ Documentation branches must be reviewed through pull requests and merged after c
 
 ## Rust server modularization program
 
-The cross-organization Rust-server program is tracked in Linear by [DEN-1682](https://linear.app/denman/issue/DEN-1682) and [DEN-1757](https://linear.app/denman/issue/DEN-1757). The organization-specific technical and operational ledger is [RUST_SERVER_MODULARIZATION.md](./RUST_SERVER_MODULARIZATION.md).
+The cross-organization Rust-server program is tracked in Linear by [DEN-1682](https://linear.app/denman/issue/DEN-1682), [DEN-1757](https://linear.app/denman/issue/DEN-1757), and the repository-publication reconciliation [DEN-2328](https://linear.app/denman/issue/DEN-2328). The organization-specific technical and operational ledger is [RUST_SERVER_MODULARIZATION.md](./RUST_SERVER_MODULARIZATION.md).
 
 ### Current HypeSiege state
 
@@ -26,11 +26,11 @@ The cross-organization Rust-server program is tracked in Linear by [DEN-1682](ht
 | API runtime | `hypesiege/hypesiege-api-server.rs#19` | Merged; dependency bootstrap and outbox/publish worker ownership are modularized. |
 | Web runtime | `hypesiege/hypesiege-web-server.rs#8` | Merged; routes, state, security middleware, browser tests, and runtime lifecycle are modularized. |
 | MCP runtime | `hypesiege/hypesiege-mcp-server.rs` merged runtime series | Merged; tool routing, domain policy, telemetry, stdio lifecycle, and OpenTelemetry hardening are separated. |
-| Scheduler starter | `hypesiege-monorepo` Wave 2 artifact | Reviewed deterministic starter; target repository is not yet provisioned. |
-| Publishing-worker starter | `hypesiege-monorepo` Wave 2 artifact | Reviewed deterministic starter; target repository is not yet provisioned. |
-| Analytics starter | `hypesiege-monorepo` Wave 2 artifact | Reviewed deterministic starter; target repository is not yet provisioned. |
+| Scheduler | [`hypesiege/hypesiege-scheduler.rs`](https://github.com/hypesiege/hypesiege-scheduler.rs), repository `1324464386`, `main` `e8a739d9e658e9cef8f1dc938a412b923dbff57d` | Published private; exact reviewed sealed history verified. |
+| Publishing worker | [`hypesiege/hypesiege-publishing-worker.rs`](https://github.com/hypesiege/hypesiege-publishing-worker.rs), repository `1324464349`, `main` `0278b9cc86e7ea3b11d33dd987be6689dc06aba0` | Published private; exact reviewed sealed history verified. |
+| Analytics | [`hypesiege/hypesiege-analytics.rs`](https://github.com/hypesiege/hypesiege-analytics.rs), repository `1324459288`, `main` `3eb8efba49bd4f932b7cc673c66b3788e3f458c1` | Published private; exact reviewed sealed history verified. |
 
-The reviewed Wave 2 starter artifact is recorded by `hypesiege/hypesiege-monorepo#15`. The repository-provisioning controller and exact issue-comment trigger are merged, but the trusted run on August 5, 2026 failed before repository creation because no repository-admin GitHub App ID/private-key pair was configured in Actions. The default repository `GITHUB_TOKEN` had read-only contents permission and was not treated as repository-admin authority.
+The reviewed Wave 2 source is sealed at `ORESoftware/ai-agent-coordinator.rs@5d9a0c2cb44dff607bc3953954ce4b9af08e5789`. Trusted-main run `31045540736` reconstructed the exact 32-repository fleet, preserved these three private repositories at their reviewed heads, and verified the combined HypeSiege/StreemPilot result as 4/4. Bounded evidence is merged in `ORESoftware/k8s-cluster#1069` at `4e9df62da54479c9f52d850c16703b5e112bb282`. Artifact `8946360080` has SHA-256 `c87ff38d687d81def5c419297dc28445d6cf659ef1d262c3c02d6b4a18ed99ec`.
 
 ### GitHub Project fields
 
@@ -45,8 +45,8 @@ Use these organization-wide fields for the Rust program:
 - **Blocked by:** issue, credential class, capacity lane, or repository prerequisite.
 - **Evidence:** exact head SHA, workflow run, artifact digest, and merge commit.
 
-The current integration cannot mutate Projects v2. Keep the durable routing card and linked implementation issues current so a Projects-capable GitHub App or authenticated `gh project` runner can add and update the corresponding board items without reconstructing state from chat history.
+Keep `hypesiege/.github#2`, the Wave 2 coordination issue, the three repository follow-up PRs, and DEN-2328 linked to [HypeSiege Project 1](https://github.com/orgs/hypesiege/projects/1). The current connector does not expose Projects v2 item mutation, so the durable issues and this ledger remain the board-ready source until a Projects-capable GitHub App or authenticated `gh project` runner performs the item updates.
 
 ### Credential boundary
 
-Do not place personal access tokens in commits, workflow inputs, issue bodies, PR descriptions, artifacts, logs, or Linear. Repository creation must use a reviewed GitHub App installation token with organization repository-administration permission, short lifetime, explicit target allowlist, non-secret evidence, token revocation, and temporary-key destruction.
+Do not place personal access tokens, GitHub App private keys, or other credentials in commits, workflow inputs, issue bodies, PR descriptions, artifacts, logs, or Linear. The August 5 publication used a one-time run-bound RSA-OAEP handoff after the protected host proved that no repository-admin App key material was available. Exactly one ciphertext was accepted, the decrypted credential was masked and held only in a mode-0600 runner-temporary file, and all credential material was destroyed unconditionally. Permanent repository administration should use a reviewed organization GitHub App with short-lived installation tokens and exact target allowlists. Any PAT pasted into chat must be revoked or rotated.

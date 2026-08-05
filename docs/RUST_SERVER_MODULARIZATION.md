@@ -1,6 +1,6 @@
 # HypeSiege Rust server modularization and provisioning ledger
 
-This document is the HypeSiege organization view of the cross-organization program tracked by Linear [DEN-1682](https://linear.app/denman/issue/DEN-1682) and [DEN-1757](https://linear.app/denman/issue/DEN-1757).
+This document is the HypeSiege organization view of the cross-organization program tracked by Linear [DEN-1682](https://linear.app/denman/issue/DEN-1682), [DEN-1757](https://linear.app/denman/issue/DEN-1757), and repository-publication reconciliation [DEN-2328](https://linear.app/denman/issue/DEN-2328).
 
 ## Architecture contract
 
@@ -18,61 +18,56 @@ Product policy stays in the product repository. A shared cross-organization runt
 
 All three services retain product-specific authorization, routing, outbox, publishing, provider, and retry policy. Rollback is by reviewed revert; shared history is not rewritten.
 
-## Wave 2 reviewed repository targets
+## Wave 2 published repositories
 
-| Target | Starter responsibility | Repository state |
+| Repository | Responsibility | Verified publication state |
 | --- | --- | --- |
-| `hypesiege/hypesiege-scheduler.rs` | Deterministically select due scheduled posts and enqueue publish jobs. | `provisioning_required` |
-| `hypesiege/hypesiege-publishing-worker.rs` | Classify idempotent official-provider attempts into acknowledge, retry, dead-letter, or permanent rejection. | `provisioning_required` |
-| `hypesiege/hypesiege-analytics.rs` | Aggregate bounded reviewed metrics from official-provider APIs with checked arithmetic. | `provisioning_required` |
+| [`hypesiege/hypesiege-scheduler.rs`](https://github.com/hypesiege/hypesiege-scheduler.rs) | Deterministically select due scheduled posts and enqueue publish jobs. | Private repository `1324464386`; `main` `e8a739d9e658e9cef8f1dc938a412b923dbff57d`; exact sealed history verified. |
+| [`hypesiege/hypesiege-publishing-worker.rs`](https://github.com/hypesiege/hypesiege-publishing-worker.rs) | Classify idempotent official-provider attempts into acknowledge, retry, dead-letter, or permanent rejection. | Private repository `1324464349`; `main` `0278b9cc86e7ea3b11d33dd987be6689dc06aba0`; exact sealed history verified. |
+| [`hypesiege/hypesiege-analytics.rs`](https://github.com/hypesiege/hypesiege-analytics.rs) | Aggregate bounded reviewed metrics from official-provider APIs with checked arithmetic. | Private repository `1324459288`; `main` `3eb8efba49bd4f932b7cc673c66b3788e3f458c1`; exact sealed history verified. |
 
-The source manifest, deterministic generator, offline compilation tests, canonical archives, and provenance receipts are merged in `hypesiege/hypesiege-monorepo`. The durable coordination card is [hypesiege/hypesiege-monorepo#15](https://github.com/hypesiege/hypesiege-monorepo/issues/15).
+The deterministic source manifest, generator, tests, archives, and provenance are sealed at `ORESoftware/ai-agent-coordinator.rs@5d9a0c2cb44dff607bc3953954ce4b9af08e5789`. The durable coordination card remains [hypesiege/hypesiege-monorepo#15](https://github.com/hypesiege/hypesiege-monorepo/issues/15).
 
-## Repository provisioning result — August 5, 2026
+## Repository publication result — August 5, 2026
 
-The reviewed provisioning workflow and exact issue-comment trigger are merged. The trigger run validated the manifest and trusted event but stopped before the first repository write:
+Trusted-main GitHub Actions run `31045540736` authenticated as `ORESoftware`, reconstructed the exact 32-repository source fleet—888 tracked files and 30 gitlinks—and verified the combined HypeSiege/StreemPilot publication as 4/4. HypeSiege preflight found all three repositories already present from earlier attempts and preserved their repository IDs and exact `main` heads without force updates or visibility changes.
+
+Bounded non-secret evidence is merged in [ORESoftware/k8s-cluster#1069](https://github.com/ORESoftware/k8s-cluster/pull/1069) as commit `4e9df62da54479c9f52d850c16703b5e112bb282`. Artifact `8946360080`, `den-2328-encrypted-exact-gaps-31045540736`, has SHA-256 `c87ff38d687d81def5c419297dc28445d6cf659ef1d262c3c02d6b4a18ed99ec`.
+
+The final evidence states:
 
 ```text
-no GitHub App candidates found: app_ids=0 private_keys=0
+created=1 preserved_exact=3 verified=4 failures=0
 ```
 
-The runner exposed only the default repository `GITHUB_TOKEN`; it did not have a repository-admin GitHub App ID/private key. No repository was created and no starter archive was pushed.
+The one newly created repository in the final run was the StreemPilot media router; these three HypeSiege repositories were preserved exactly. Earlier attempts that created the HypeSiege repositories failed only during post-push GitHub propagation checks, and later direct verification established that every repository was private on `main` at its reviewed sealed SHA.
 
-### Required administrator action
+## Repository-local follow-up sequence
 
-Configure one GitHub App for the `hypesiege` organization with:
+For each published repository:
 
-- all-repositories installation scope;
-- organization repository administration: write;
-- repository contents: write;
-- pull requests: write;
-- metadata: read;
-- Actions secrets containing the App ID and PEM private key under the selector’s reviewed naming contract.
-
-Then rerun the exact trusted provisioning command recorded in issue #15. The workflow probes candidate App pairs, requires exactly one valid pair, creates or verifies only the three manifest targets, revokes probe and creation tokens, destroys temporary private-key files, and uploads non-secret JSONL evidence.
-
-A classic PAT is not an approved substitute. The token pasted into chat is not copied into any GitHub or Linear surface and should be revoked.
-
-## Initialization sequence after repository creation
-
-1. Verify each repository is private, issue-enabled, project-enabled, wiki-disabled, and initialized on `main`.
-2. Download the exact reviewed Wave 2 artifact and verify its GitHub artifact digest plus internal `SHA256SUMS`.
-3. Unpack one starter archive into a repository-specific initialization branch.
-4. Open one draft PR per repository.
-5. Run offline locked Cargo metadata, rustfmt, strict Clippy, all-target tests, architecture tests, and startup probe.
-6. Merge only the exact green reviewed head.
-7. Add the exact child commit as a monorepo gitlink in a separate PR.
-8. Update DEN-1757, this document, issue #15, and the GitHub Project item with exact evidence.
+1. Open a focused follow-up branch and PR; do not rewrite the sealed bootstrap commit.
+2. Add canonical Project/Linear routing and repository-specific operational ownership.
+3. Run locked Cargo metadata, rustfmt, strict Clippy, all-target tests, architecture tests, and startup probes already defined by the starter.
+4. Add observability, security, retry, and idempotency tests with each behavioral change.
+5. Merge only the exact green reviewed head.
+6. Add or update the exact child commit as a monorepo gitlink in a separate PR.
+7. Update DEN-1757, DEN-2328, this document, issue #15, and the GitHub Project item with exact evidence.
 
 ## GitHub Project update contract
 
-Add these durable items to [HypeSiege Project 1](https://github.com/orgs/hypesiege/projects/1):
+Keep these durable inputs linked to [HypeSiege Project 1](https://github.com/orgs/hypesiege/projects/1):
 
-- `hypesiege/.github#2` — organization routing card.
-- `hypesiege/hypesiege-monorepo#15` — Wave 2 provisioning and artifact card.
-- Initialization PRs for the scheduler, publishing worker, and analytics repositories after creation.
+- `hypesiege/.github#2` — organization routing card;
+- `hypesiege/hypesiege-monorepo#15` — Wave 2 publication and artifact card;
+- follow-up PRs in scheduler, publishing-worker, and analytics;
+- DEN-2328 and the merged evidence PR.
 
-Projects v2 mutations require a Projects-capable App or an authenticated GitHub CLI/GraphQL runner with project write permission. Until that exists, the issues above are the stable board-ready inputs; no board mutation is claimed.
+Use fields `Workstream`, `Repository`, `Linear ID`, `Status`, `Priority`, `Release gate`, `Blocked by`, and `Evidence`. The current connector does not expose Projects v2 item mutation; the issues, PRs, and this ledger are the stable board-ready inputs for a Projects-capable GitHub App or authenticated `gh project` runner.
+
+## Credential boundary
+
+The protected GitHub App path failed before mutation because no repository-admin App ID/private-key pair was present. The successful publication therefore used an exceptional one-time RSA-OAEP handoff bound to one Actions run and issue. Exactly one ciphertext was accepted; the decrypted PAT was immediately masked, held only in a mode-0600 runner-temporary file, and destroyed with the keypair and payload in an unconditional cleanup step. No plaintext credential entered source, workflow configuration, artifacts, issue text, PR text, logs, or Linear. Permanent organization administration should use reviewed, least-privilege GitHub App installation tokens. Any PAT pasted into chat must be revoked or rotated.
 
 ## Merge and evidence requirements
 
