@@ -1,10 +1,56 @@
 {
+  "$schema": "./repository-relationships.schema.json",
+  "audience": "public",
+  "generated": {
+    "complete_for_visibility": "public",
+    "generated_at": "2026-08-05T21:07:32Z",
+    "generator_version": "2026-08-04.1",
+    "inventory_digest": "sha256:7ac32d981a45c3c440a913bee9df9a6691eda8275894a27845811f9803969a85",
+    "managed_by": "ore-repository-relationship-rollout",
+    "omitted_repository_count": 16,
+    "private_repositories_omitted": true,
+    "source": "GitHub GraphQL repository inventory plus reviewed manual declarations"
+  },
+  "owner": {
+    "account_type": "organization",
+    "dotgithub_repository": "hypesiege/.github",
+    "github_id": "311153811",
+    "linear_project": {
+      "id": "cd247cb1-870b-471e-89f6-9484df19e798",
+      "name": "github.com/hypesiege",
+      "team_id": "eb8ab169-5afe-4b6f-9cab-3f2aa3e887dc",
+      "url": "https://linear.app/denman/project/githubcomhypesiege-12bdb95b4116",
+      "workspace": "denman"
+    },
+    "login": "hypesiege",
+    "mapping_id": "context:hypesiege"
+  },
+  "private_registry": {
+    "contains_non_public_inventory": true,
+    "digest": "sha256:55d92a5c96fa7dd7f9b643fa6d51397b8a2d6fa5b21d3522ab9b2e9e30a30c1e",
+    "path": "owners/hypesiege.json",
+    "repository": "ORESoftware/project-registry"
+  },
+  "relationships": [],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hypesiege/.github",
+      "github_id": "1324048947",
+      "name": ".github",
+      "owner": "hypesiege",
+      "roles": [
+        "community-health",
+        "governance",
+        "relationship-registry"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hypesiege/.github",
+      "visibility": "public"
+    }
+  ],
   "schema_version": 1,
-  "organization": "hypesiege",
-  "generated_at": null,
-  "repositories": [],
-  "notes": [
-    "Populate from live GitHub inventory; do not infer unverified dependencies.",
-    "Repository-local manifests remain authoritative for exact dependency versions."
-  ]
+  "unresolved_hints": []
 }
