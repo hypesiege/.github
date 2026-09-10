@@ -62,7 +62,7 @@ Shared schemas, clients, route fixtures, sample campaigns, publishing-state mode
 
 The live Flutter repository records the companion contract in [`COMPANION_DESKTOP.md`](https://github.com/hypesiege/hypesiege-flutter-app/blob/main/COMPANION_DESKTOP.md), introduced through [PR #11](https://github.com/hypesiege/hypesiege-flutter-app/pull/11).
 
-Central toolkit assignments: [`rust-desktop-strategies.md`](https://github.com/ORESoftware/project-registry/blob/main/docs/rust-desktop-strategies.md).
+Central toolkit assignments are stored in the opaque [`approved-private-registry`](private-registry://canonical/registry/rust-desktop-strategies.md); this public repository intentionally does not expose its backing private repository locator.
 
 ## Project routing
 
