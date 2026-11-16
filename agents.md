@@ -107,3 +107,11 @@ work in progress, and `-A` is how that — plus secrets — gets committed by ac
 
 Never report work as landed while it is only on local disk. A change is done when
 it is committed, pushed, and open as a pull request; compiling is not landing.
+
+## Rust-first testing and scripts (HypeSiege)
+
+- **Do not add new Python scripts, Python test harnesses, or Python-based CI automation.** Write first-party verification, source-policy checks, contract tests, code generation, maintenance CLIs and migration tools in Rust (prefer `cargo test`, a Rust binary or `cargo xtask`).
+- Keep test names and diagnostics actionable; include positive, negative, malformed-input, and security boundary cases. Pin dependencies and verify the exact PR head with `cargo fmt --check`, `cargo clippy -- -D warnings` and `cargo test` when applicable.
+- Python already in the fleet is **migration debt**. Preserve existing behavior until a separately reviewed Rust replacement has equivalent fixtures, diagnostics, error codes, CLI behavior and end-to-end results. Do not remove or bypass failing legacy checks just to get green CI.
+- Python application code is an exception only when explicitly scoped and documented as described in `CONTRIBUTING.md`. It is not an exception for generic scripting or tests.
+- The organization `.github` policy is **not automatically enforced in every repository**. Update each repository's lowercase `agents.md`, workflows and test entrypoints explicitly when migrating.
